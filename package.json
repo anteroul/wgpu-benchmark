@@ -1,8 +1,8 @@
 {
-  "name": "webgpu-renderer",
-  "version": "0.0.1",
-  "description": "WebGPU/WebGL Benchmarking Tool",
-  "main": "index.js",
+  "name": "magnolia-renderer",
+  "version": "0.0.2",
+  "description": "WebGL Rendering Engine",
+  "main": "app.js",
   "scripts": {
     "start": "npm run install-dependencies && npm run build && npm run serve",
     "install-dependencies": "npm i",

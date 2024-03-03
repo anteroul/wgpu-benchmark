@@ -44,7 +44,6 @@ function initShaderProgram(gl, vs_path, fs_path) {
 
 function loadShader(gl, type, source) {
     const shader = gl.createShader(type);
-    console.log(source);
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
 

@@ -57,8 +57,10 @@ export class Renderer {
         return positionBuffer;
     }
 
-    render(programInfo) {
+    render(polygon, deltaTime) {
+        const programInfo = polygon.shader;
         const buffers = this.initBuffers();
+
         this.context.clearColor(0.0, 0.0, 0.2, 1.0);
         this.context.clearDepth(1.0);
         this.context.enable(this.context.DEPTH_TEST);
@@ -88,6 +90,8 @@ export class Renderer {
             modelViewMatrix, // matrix to translate
             [-0.0, 0.0, -6.0],
         ); // amount to translate
+
+        polygon.rotate(projectionMatrix, modelViewMatrix, deltaTime, 1.5);
 
         this.setPositionAttribute(buffers, programInfo);
         this.setColorAttribute(this.context, buffers, programInfo);

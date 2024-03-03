@@ -1,30 +1,37 @@
 import { Renderer } from "./renderer.js";
+import { Polygon } from "./polygon.js";
 import { createNewPolygon } from "./shader.js";
 
-let canvas = document.querySelector("canvas");
+const canvas = document.querySelector("canvas");
 let renderer = null;
-let quit = true;
-let geometry;
+let polygon = null;
+let ticks = 0;
+let deltaTime = 0;
 
 async function init() {
     try {
         renderer = new Renderer(canvas);
-        geometry = await createNewPolygon(renderer.context, "./src/shaders/vert.glsl", "./src/shaders/frag.glsl");
+        polygon = new Polygon(await createNewPolygon(renderer.context, "./src/shaders/vert.glsl", "./src/shaders/frag.glsl"));
     } catch (err) {
         console.error("Failed to initialize renderer.", err);
         renderer = null;
     }
 }
 
+function update(now) {
+    now *= 0.001;
+    deltaTime = now - ticks;
+    ticks = now;
+    renderer.render(polygon, deltaTime);
+    requestAnimationFrame(update);
+}
+
 async function main() {
     if (!renderer) {
         await init();
-        quit = false;
     }
-    if (!quit && renderer) {
-        renderer.context.clear(renderer.context.COLOR_BUFFER_BIT);
-        renderer.render(geometry);
-    }
+    update(ticks);
+    requestAnimationFrame(update);
 }
 
 main();
