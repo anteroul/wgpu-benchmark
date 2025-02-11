@@ -85,7 +85,7 @@ export class Renderer {
         this.device = await this.adapter?.requestDevice();
 
         if (!this.device) {
-            fail('need a browser that supports WebGPU');
+            fail('This browser does not support WebGPU');
             return;
         }
 
